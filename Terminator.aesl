@@ -15,7 +15,7 @@
 <!--node thymio-II-->
 <node nodeId="9987" name="thymio-II">onevent prox
     
-    call leds.top(32, 0, 0)
+    call leds.top(0, 32, 0)
     
 	if  prox.horizontal[1] > 4000 then
 		motor.left.target = -350
