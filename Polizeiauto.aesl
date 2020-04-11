@@ -1,0 +1,37 @@
+<!DOCTYPE aesl-source>
+<network>
+
+
+<!--list of global events-->
+
+
+<!--list of constants-->
+
+
+<!--show keywords state-->
+<keywords flag="true"/>
+
+
+<!--node thymio-II-->
+<node nodeId="9987" name="thymio-II">onevent tap 
+   call leds.top (0,0,32)
+   onevent button.backward 
+   call leds.top (0,0,0)
+
+onevent button.center
+motor.left.target =0
+motor.right.target =0
+onevent button.forward
+motor.left.target = 1000
+motor.right.target =1000
+
+onevent prox
+
+ if prox.horizontal [2] >1000 or prox.horizontal[1] >1000 or prox.horizontal[3] >1000 
+ or prox.horizontal[0] >1000 or prox.horizontal[4] >1000  then
+ 	call sound.freq( 720,7)
+ end
+ </node>
+
+
+</network>

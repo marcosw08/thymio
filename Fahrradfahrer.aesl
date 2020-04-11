@@ -1,0 +1,43 @@
+<!DOCTYPE aesl-source>
+<network>
+
+
+<!--list of global events-->
+
+
+<!--list of constants-->
+
+
+<!--show keywords state-->
+<keywords flag="true"/>
+
+
+<!--node thymio-II-->
+<node nodeId="19335" name="thymio-II">var Switch =0												#Erstellt eine Variable "Switch", um den Thymio mit EINEM Knopf zu 																#steuern
+
+call leds.top(0, 0, 0)									#Schaltet die LEDs aus
+onevent buttons											
+if button.center ==1 and Switch ==0 then			#Hauptteil
+	while button.center ==1 do								#Wartet, bis der Knopf nicht mehr gedrückt wird
+		Switch =1
+	end	
+	while button.center ==0 do								#Lässt den Thymio aufwärts längsämer fahren &amp; rot werden lassen 
+																	#und abwärts schneller fahren.
+		if acc [1] >3 then
+			call leds.top(255, 0, 0)
+		else
+			call leds.top(0, 0, 0)
+		end
+		motor.left.target=500-acc [1]*40
+		motor.right.target=500-acc [1]*40
+	end
+elseif button.center ==1 and Switch ==1 then			#Stoppt den Thymio wieder
+	while button.center ==1 do
+		Switch =0
+	end
+	motor.left.target=0
+	motor.right.target=0
+end</node>
+
+
+</network>

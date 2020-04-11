@@ -1,0 +1,119 @@
+<!DOCTYPE aesl-source>
+<network>
+
+
+<!--list of global events-->
+
+
+<!--list of constants-->
+
+
+<!--show keywords state-->
+<keywords flag="true"/>
+
+
+<!--node thymio-II-->
+<node nodeId="9987" name="thymio-II">var Kreisgrösse =8												#Erstellt eine Variable 'Kreisgrösse'
+var Speed =1													#Erstellt eine Variable 'Speed'
+var Beschäftigung												#Erstellt eine Variable, die den Roboter beschäftigt 																				#'Beschäftigung'
+call leds.temperature(0, 0)
+call leds.rc(0)
+
+
+if button.center ==1 then
+	while button.center ==1 do
+		Beschäftigung=Beschäftigung+1
+	end
+end
+
+onevent buttons													#Prüft, welcher Knopf gedrückt wird
+if button.left ==1 and Kreisgrösse != 9 then
+	Kreisgrösse=Kreisgrösse+1
+end
+if button.left ==1 and Kreisgrösse ==9 then
+	Kreisgrösse =1
+end
+
+if button.right ==1 and Kreisgrösse !=0 then
+	Kreisgrösse=Kreisgrösse-1
+end
+if  button.right ==1 and Kreisgrösse ==0 then
+	Kreisgrösse =8
+end
+
+
+if Kreisgrösse ==8 then											#Passt den LED-Kreis an.
+	call leds.circle(10, 0, 0, 0, 0, 0, 0, 0)
+end
+if Kreisgrösse ==7 then
+	call leds.circle(10, 10, 0, 0, 0, 0, 0, 0)
+end
+if Kreisgrösse ==6 then
+	call leds.circle(10, 10, 10, 0, 0, 0, 0, 0)
+end
+if Kreisgrösse ==5 then
+	call leds.circle(10, 10, 10, 10, 0, 0, 0, 0)
+end
+if Kreisgrösse ==4 then
+	call leds.circle(10, 10, 10, 10, 10, 0, 0, 0)
+end
+if Kreisgrösse ==3 then
+	call leds.circle(10, 10, 10, 10, 10, 10, 0, 0)
+end
+if Kreisgrösse ==2 then
+	call leds.circle(10, 10, 10, 10, 10, 10, 10, 0)
+end
+if Kreisgrösse ==1 then
+	call leds.circle(10, 10, 10, 10, 10, 10, 10, 10)
+end
+
+
+if button.left ==1 or button.right ==1 then				  	#Wartet, bis der Knopf losgelassen wurde.
+	while button.left ==1 or button.right ==1 do
+		Beschäftigung=Beschäftigung+1
+	end
+end
+
+
+
+if button.forward ==1 and Speed !=9 then						#Prüft welcher Knopf gedrückt wird
+	Speed=Speed+1
+end
+if button.forward ==1 and Speed ==9 then
+	Speed=1
+end
+if button.backward ==1 and Speed !=0 then
+	Speed=Speed-1
+end
+if button.backward ==1 and Speed ==0 then
+	Speed=8
+end
+
+
+call leds.buttons(Speed, Speed, Speed, Speed)					#Passt die Helligkeit der Lichter an
+
+
+if button.forward ==1 or button.backward ==1 then				#Wartet, bis der Knopf losgelassen wurde.
+	while button.forward ==1 or button.backward ==1 do
+		Beschäftigung=Beschäftigung+1
+	end
+end
+
+
+if button.center ==1 then										#Lässt den Roboter fahren.
+	while button.center ==1 do
+		Beschäftigung=Beschäftigung+1
+	end
+	while button.center ==0 do
+		motor.left.target =Speed*50
+		motor.right.target =Speed*50/(Kreisgrösse*2)
+	end
+	motor.left.target =0
+	motor.right.target =0
+	while button.center ==1 do
+		Beschäftigung=Beschäftigung+1
+	end
+end</node>
+
+
+</network>
