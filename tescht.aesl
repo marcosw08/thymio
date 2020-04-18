@@ -1,0 +1,38 @@
+<!DOCTYPE aesl-source>
+<network>
+
+
+<!--list of global events-->
+
+
+<!--list of constants-->
+
+
+<!--show keywords state-->
+<keywords flag="true"/>
+
+
+<!--node thymio-II-->
+<node nodeId="9987" name="thymio-II">var a =0								         #Erstellt eine Variable "a"
+var Colour =0								     #Erstellt eine Variable "Colour"
+onevent buttons
+if button.center ==1 and Colour ==0 then		 #Setzt jedes zweite Mal die LED-Farbe auf rot
+    call leds.top (32, 0, 0)
+	Colour =1
+	if button.center ==1 then
+        while button.center ==1 do
+			a=a+1   
+        end
+    end
+elseif button.center ==1 and Colour ==1 then	 #Setzt jedes zweite Mal die LED-Farbe auf grün
+    call leds.top (0, 32, 0)
+	Colour =0
+	if button.center ==1 then
+        while button.center ==1 do
+			a=a+1
+        end
+    end
+end</node>
+
+
+</network>
