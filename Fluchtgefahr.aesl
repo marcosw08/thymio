@@ -1,0 +1,49 @@
+<!DOCTYPE aesl-source>
+<network>
+
+
+<!--list of global events-->
+
+
+<!--list of constants-->
+
+
+<!--show keywords state-->
+<keywords flag="true"/>
+
+
+<!--node thymio-II-->
+<node nodeId="19335" name="thymio-II">var a =0															#Erstellt eine Variable "a"
+var Switch =1														#Erstellt eine Variable "Switch" um den Thymio mit einem Knopf zu steuern
+onevent button.center
+if button.center ==1 and Switch ==1 then						#Schaltet das Programm unten an bzw. aus
+	while button.center ==1 do									
+		a=1
+	end
+	while button.center ==0 do									
+		when prox.horizontal [0] | prox.horizontal [1] | prox.horizontal [2] | prox.horizontal [3] | prox.horizontal [4] |						prox.horizontal [5] | prox.horizontal [6] >100 do
+			call sound.freq(1500, 5)			#Wird einer der Sensoren betätigt, fährt der Roboter weg und piepst kurz
+			while prox.horizontal [0] | prox.horizontal [1] | prox.horizontal [2] | prox.horizontal [3] |												prox.horizontal [4] | prox.horizontal [5] | prox.horizontal [6] >100 do
+				if prox.horizontal [5] | prox.horizontal [6] >100 then
+					motor.right.target =prox.horizontal [6]/4
+					motor.left.target =prox.horizontal [5]/4
+				else
+					motor.right.target =-prox.horizontal [3]/4
+					motor.left.target =-prox.horizontal [1]/4
+				end
+			end
+		end
+	end
+	motor.right.target =0								#Setzt den Roboter zurück
+	motor.left.target =0
+elseif button.center ==1 and Switch ==0 then
+	motor.right.target =0
+	motor.left.target =0
+	Switch =1
+	while button.center ==1 do
+		a=1
+	end
+end</node>
+
+
+</network>
